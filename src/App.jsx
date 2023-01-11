@@ -5,12 +5,14 @@ import AttendanceHis from "./views/dashboard/AttendanceHis";
 import Login from "./views/login/Login";
 import Layout from "./Layout";
 import Signup from "./views/signup/Signup";
+import { AuthContextProvider } from "./context/AuthContext";
 
 
 
 function App() {
 
   return (
+    <AuthContextProvider>
             <Routes>
               <Route path="/" element={<Login/>} />
               <Route path="/login" element={<Login />} />
@@ -23,7 +25,7 @@ function App() {
               </Route>               
               
             </Routes>
-   
+    </AuthContextProvider>
   );
 }
 export default App;
