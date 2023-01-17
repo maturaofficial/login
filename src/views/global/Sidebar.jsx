@@ -11,7 +11,9 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import {  signOut } from "firebase/auth";
 import {auth} from '../../firebase';
-
+import storage from '../../firebase';
+import { ref,getDownloadURL,getStorage} from "firebase/storage";
+import { UserAuth } from "../../context/AuthContext";
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -38,7 +40,20 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const navigate = useNavigate();
-  
+  const {User} = UserAuth();
+  const storage = getStorage();
+  const imageRef = ref(storage, 'users/0CGGyTjhqSNcjRbDcmkFqRWkhoN2/image.png');
+  const [url, setUrl] = useState();
+  getDownloadURL(imageRef)
+    .then((url) => {
+      // const img = document.getElementById('avatar');
+      // img.setAttribute = url;
+      setUrl(url);
+      console.log(url);
+    }).catch((error) => {
+      console.log(error.message, "error getting the image url");
+    });
+
   
   const handleLogout = () => {               
       signOut(auth).then(() => {
@@ -102,7 +117,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`./src/assets/user.png`}
+                  src={url}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>

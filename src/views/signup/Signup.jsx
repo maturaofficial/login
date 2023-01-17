@@ -91,7 +91,7 @@ const Signup = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <h4>Batch No.</h4>
+            <h4>Batch ID.</h4>
             <TextField
               type="text"
               label="Batch ID."
