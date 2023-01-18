@@ -1,7 +1,7 @@
 import { Avatar,useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import React, { useState } from "react";
-import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
+import {ref as ref_storage,uploadBytes,getDownloadURL} from "firebase/storage"
 import { storage } from "../../firebase";
 import { auth } from "../../firebase";
 
@@ -22,7 +22,7 @@ const Settings = () => {
 
   const handleSubmit = () => {
     const userId = auth.currentUser.uid;
-    const imageRef = ref(storage, 'users/'+userId+'/'+'image.png');
+    const imageRef = ref_storage(storage, 'users/'+userId+'/'+'image.png');
 
     uploadBytes(imageRef, image)
       .then(() => {

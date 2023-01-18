@@ -14,6 +14,8 @@ import {auth} from '../../firebase';
 import storage from '../../firebase';
 import { ref,getDownloadURL,getStorage} from "firebase/storage";
 import { UserAuth } from "../../context/AuthContext";
+import { Avatar } from "@mui/material";
+
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -42,8 +44,10 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const {User} = UserAuth();
   const storage = getStorage();
-  const imageRef = ref(storage, 'users/0CGGyTjhqSNcjRbDcmkFqRWkhoN2/image.png');
+  const userID = auth.currentUser.uid;
+  const imageRef = ref(storage, 'users/'+userID+'/'+'image.png');
   const [url, setUrl] = useState();
+ 
   getDownloadURL(imageRef)
     .then((url) => {
       // const img = document.getElementById('avatar');
@@ -113,12 +117,11 @@ const Sidebar = () => {
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
+                <Avatar
+                  alt="/broken-image.jpg"
                   src={url}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
+                  sx={{ width: 150, height: 150 }}
                 />
               </Box>
               <Box textAlign="center">
